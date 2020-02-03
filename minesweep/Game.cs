@@ -314,13 +314,15 @@ namespace minesweep
                         // gameOver to true
                         if (thisButton.GetIsBomb())
                         {
-                            thisButton.BackgroundImage = minesweep.Properties.Resources.bomb;
-                            thisButton.BackgroundImageLayout = ImageLayout.Stretch;
-                            endMessage.Text = "You Lose!";
-                            endMessage.BackColor = Color.Black;
-                            endMessage.ForeColor = Color.Red;
-                            endMessage.Visible = true;
-                            
+                            //thisButton.BackgroundImage = minesweep.Properties.Resources.bomb;
+                            //thisButton.BackgroundImageLayout = ImageLayout.Stretch;
+                            //endMessage.Text = "You Lose!";
+                            //endMessage.BackColor = Color.Black;
+                            //endMessage.ForeColor = Color.Red;
+                            //endMessage.Visible = true;
+                            UnveilBomb(thisButton);
+                            RevealBombs();
+
                             gameOver = true;
                         }
                         // not a bomb so we reveal the number of empty space
@@ -383,6 +385,41 @@ namespace minesweep
                     square.Text = square.numBombsNear.ToString();
                 }
                
+            }
+        }
+
+        /*******************************************************************************
+        * UnveilBomb
+        * Parameters
+        *   square - the current square
+        * Change the image to a bomb and set the end message.
+        *******************************************************************************/
+        private void UnveilBomb(MyButton square)
+        {
+            square.BackgroundImage = minesweep.Properties.Resources.bomb;
+            square.BackgroundImageLayout = ImageLayout.Stretch;
+            endMessage.Text = "You Lose!";
+            endMessage.BackColor = Color.Black;
+            endMessage.ForeColor = Color.Red;
+            endMessage.Visible = true;
+        }
+
+        /*******************************************************************************
+        * RevealBombs
+        * Reveal all the bombs on the board
+        *******************************************************************************/
+        public void RevealBombs()
+        {
+            for (int r = 0; r < rows; r++)
+            {
+                for (int c = 0; c < cols; c++)
+                {
+                    MyButton button = board[r, c];
+                    if (button.GetIsBomb())
+                    {
+                        UnveilBomb(button);
+                    }
+                }
             }
         }
 
